@@ -1,0 +1,100 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+}
+* {
+  font-family: 'Readex Pro', sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+
+/* AddReceiptModal and EditReceiptModal */
+
+.modal-wrapper {
+  position: absolute;
+  margin: 0 50vh;
+  display: flex;
+  height:310px;
+
+}
+
+.modal{
+padding: 10px;
+display: flex;
+flex-direction: column;
+background-color: rgb(230,230,230);
+width: 450px;
+border-radius:10px;
+margin: 10px;
+outline: solid 1px rgb(140,140,140)
+}
+
+.modal form{
+  
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.modal form input{
+  margin: 2px;
+  padding: 5px
+}
+
+.modal .close-icon {
+  float: right;
+  margin-right: 5px;
+}
+
+/* Nav Bar */
+
+.nav {
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(224, 224, 224);
+}
+
+.nav h1{
+  font-size: 40px;
+  padding:0px 40px
+}
+
+.nav button{
+  font-size: 20px;
+}
+
+/* Table */
+
+.table-container {
+  margin: 20px;
+  width: 80%;
+}
+
+.table-row {
+  margin: 100px;
+}
+
+th,
+td {
+  border: 1px solid rgb(126, 126, 126);
+  background-color: rgb(230, 230, 230);
+  text-align: left;
+  padding: 8px;
+  font-size: 32px;
+}
+
+tr:hover td{
+  cursor: pointer;
+  background-color: rgb(202, 202, 202)
+}
