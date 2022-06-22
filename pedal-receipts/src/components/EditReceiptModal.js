@@ -11,12 +11,14 @@ const EditReceiptModal = ({
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
 
+  // the price, name and location state are initially set to the corresponding values from the selectedReceipt
   useEffect(() => {
     setPrice(selectedReceipt.price);
     setName(selectedReceipt.name);
     setLocation(selectedReceipt.location);
   }, []);
 
+  // Creates a put request to the backend to edit an existing receipt in the database and updates the receiptsArray
   const editReceipt = async (receipt) => {
     try {
       const response = await axios.put(
@@ -24,13 +26,15 @@ const EditReceiptModal = ({
         receipt
       );
 
+      // Gets the updated receipt from the response
       const updatedReceipt = response.data;
-      console.log(JSON.stringify(receiptsArray));
 
+      // Finds the index of the receipt in the receiptsArray that has the id
       const receiptIndex = receiptsArray.findIndex(
         (receipt) => receipt._id == updatedReceipt._id
       );
 
+      // Creates array that updates the receipt in the receiptsArray by using the receiptIndex
       const newReceiptsArray = receiptsArray.map((receipt, index) => {
         if (index == receiptIndex) {
           return updatedReceipt;
@@ -39,6 +43,7 @@ const EditReceiptModal = ({
         return receipt;
       });
 
+      // Assigns the receiptsArray to this newReceiptsArray causing the App to rerender and update table
       setReceiptsArray(newReceiptsArray);
     } catch (err) {
       console.log(err);
@@ -47,7 +52,7 @@ const EditReceiptModal = ({
 
   // When the EditReceiptModal is submitted it creates a receipt object from the values of
   // state: price, name and location and the property values _id and timestamp from the original
-  // receipt as these do not change. It passes this receipt object to the editReceipt() function from App.js
+  // receipt as these do not change. It passes this receipt object to the editReceipt() function
   const handleSubmit = async (e) => {
     e.preventDefault();
     const receiptId = selectedReceipt._id;
@@ -61,8 +66,8 @@ const EditReceiptModal = ({
       timestamp,
     };
 
-    setEditModal(false);
     editReceipt(receipt);
+    setEditModal(false);
   };
 
   return (
@@ -77,7 +82,7 @@ const EditReceiptModal = ({
         <p>Fill out the form to edit the existing receipt</p>
         <form onSubmit={handleSubmit}>
           <input
-            type='text'
+            type='number'
             id='price'
             name='price'
             placeholder='price'

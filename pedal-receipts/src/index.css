@@ -13,7 +13,9 @@ code {
     monospace;
 }
 
-button:hover{
+.close-icon,
+button:hover,
+input[type="submit"]{
   cursor: pointer;
 }
 
@@ -85,6 +87,8 @@ outline: solid 1px rgb(140,140,140)
   margin: 100px;
 }
 
+
+
 th,
 td {
   border: 1px solid rgb(126, 126, 126);
@@ -94,7 +98,15 @@ td {
   font-size: 32px;
 }
 
-tr:hover td{
+tr:hover td
+{
   cursor: pointer;
   background-color: rgb(202, 202, 202)
 }
+
+.table-row th:hover
+{
+  cursor: pointer;
+  background-color: rgb(255, 77, 77)
+}
+

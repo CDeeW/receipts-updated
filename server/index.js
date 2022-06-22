@@ -45,7 +45,8 @@ app.post('/receipt', async (req, res) => {
     const database = client.db('app-data');
     const receipts = database.collection('receipts');
 
-    // creates a receipt object using the values passed in the req.body, the current timestamp and a unique id will be assigned to it to in the database
+    // creates a receipt object using the values passed in the req.body, the current timestamp
+    // and a unique id that will be assigned to it to in the database
     const receipt = {
       price,
       name,
@@ -56,8 +57,10 @@ app.post('/receipt', async (req, res) => {
     // inserts the receipt object into the receipts collection
     const response = await receipts.insertOne(receipt);
 
+    // creates constant for the unique id of the receipt object
     const addedReceiptId = response.insertedId.toString();
 
+    // creates new receipt object including the unique id and sends this back in res.json()
     const AddedReceipt = { _id: addedReceiptId, ...receipt };
     res.json(AddedReceipt);
   } catch (err) {
@@ -78,11 +81,14 @@ app.delete('/receipt', async (req, res) => {
     const receipts = database.collection('receipts');
     console.log('deleting receipt in backend: ' + receiptId);
 
-    // query so that the receipt going to be deleted in the database has the _id of the receiptId of the receipt passed in the req.query.receiptId
+    // query so that the receipt going to be deleted in the database has the _id of the receiptId of
+    // passed in the req.query.receiptId
     const query = { _id: new mongodb.ObjectID(receiptId) };
 
     // deletes one document in the receipts collection based on the query
     const deletedReceipt = await receipts.deleteOne(query);
+
+    // sends the _id of the deleted receipt object back in the res.json()
     res.json({ _id: receiptId });
   } catch (err) {
     console.log(err);
@@ -112,6 +118,8 @@ app.put('/receipt', async (req, res) => {
 
     // updates one document in the receipts collection that matches the query
     const response = await receipts.updateOne(query, updateReceipt);
+
+    // sends the updated receipt object in the res.json()
     res.json({ _id: receiptId, price, name, location, timestamp });
   } catch (err) {
     console.log(err);

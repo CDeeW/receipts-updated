@@ -26,19 +26,14 @@ const App = () => {
     }
   };
 
-  // Creates a post request to the backend to add a new receipt to the database
-
-  // Creates a delete request to the backend to delete an existing receipt in the database
-
-  // Creates a put request to the backend to edit an existing receipt in the database
-
   // Sets the state of editModal to false and addModal to true so App rerenders and opens the AddReceiptModal
   const createAddModal = async () => {
     setEditModal(false);
     setAddModal(true);
   };
 
-  // Sets the state of selectedReceipt to be the receipt object passed in, editModal to false and addModal to true so App rerenders and opens the AddReceiptModal
+  // Sets the state of selectedReceipt to be the receipt object passed in, editModal to false and addModal
+  // to true so App rerenders and opens the EditReceiptModal
   const createEditModal = async (receipt) => {
     setSelectedReceipt(receipt);
     setAddModal(false);
@@ -67,26 +62,27 @@ const App = () => {
           />
         )}
 
-        {/* <p>{JSON.stringify(receiptsArray)}</p> */}
-
         {/* Table */}
         <table className='table-container'>
-          <tr>
-            <th>Price</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Created On</th>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Price</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Created On</th>
+            </tr>
+          </tbody>
 
           {/* maps every receipt object in the receiptsArray to a TableRow component and passes in the receipt to each one as a prop */}
           {receiptsArray.map((receipt, _index) => (
-            <TableRow
-              _index={_index}
-              receipt={receipt}
-              createEditModal={createEditModal}
-              receiptsArray={receiptsArray}
-              setReceiptsArray={setReceiptsArray}
-            />
+            <tbody key={_index}>
+              <TableRow
+                receipt={receipt}
+                createEditModal={createEditModal}
+                receiptsArray={receiptsArray}
+                setReceiptsArray={setReceiptsArray}
+              />
+            </tbody>
           ))}
         </table>
       </div>
