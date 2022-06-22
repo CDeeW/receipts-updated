@@ -54,7 +54,12 @@ app.post('/receipt', async (req, res) => {
     };
 
     // inserts the receipt object into the receipts collection
-    const insertedReceipt = await receipts.insertOne(receipt);
+    const response = await receipts.insertOne(receipt);
+
+    const addedReceiptId = response.insertedId.toString();
+
+    const AddedReceipt = { _id: addedReceiptId, ...receipt };
+    res.json(AddedReceipt);
   } catch (err) {
     console.log(err);
   } finally {

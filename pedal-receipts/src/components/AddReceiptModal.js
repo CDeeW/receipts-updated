@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const AddReceiptModal = ({ setShowModal, addReceipt }) => {
+const AddReceiptModal = ({ setShowModal, receiptsArray, setReceiptsArray }) => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -11,7 +11,23 @@ const AddReceiptModal = ({ setShowModal, addReceipt }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const receipt = { price, name, location };
+    console.log(JSON.stringify(receipt));
     addReceipt(receipt);
+  };
+
+  const addReceipt = async (receipt) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/receipt',
+        receipt
+      );
+
+      const addedReceipt = response.data;
+      console.log(addedReceipt);
+      setReceiptsArray([...receiptsArray, addedReceipt]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

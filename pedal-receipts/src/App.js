@@ -27,18 +27,6 @@ const App = () => {
   };
 
   // Creates a post request to the backend to add a new receipt to the database
-  const addReceipt = async (receipt) => {
-    try {
-      const response = await axios.post(
-        'http://localhost:8000/receipt',
-        receipt
-      );
-
-      getReceipts();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Creates a delete request to the backend to delete an existing receipt in the database
   const deleteReceipt = async (receiptId) => {
@@ -85,7 +73,11 @@ const App = () => {
         <Nav createAddModal={createAddModal} />
 
         {addModal && (
-          <AddReceiptModal setShowModal={setAddModal} addReceipt={addReceipt} />
+          <AddReceiptModal
+            setShowModal={setAddModal}
+            receiptsArray={receiptsArray}
+            setReceiptsArray={setReceiptsArray}
+          />
         )}
 
         {editModal && (
@@ -95,6 +87,8 @@ const App = () => {
             editReceipt={editReceipt}
           />
         )}
+
+        {/* <p>{JSON.stringify(receiptsArray)}</p> */}
 
         {/* Table */}
         <table className='table-container'>
