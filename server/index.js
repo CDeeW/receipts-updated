@@ -83,7 +83,7 @@ app.delete('/receipt', async (req, res) => {
 
     // deletes one document in the receipts collection based on the query
     const deletedReceipt = await receipts.deleteOne(query);
-    console.log('deletedReceipt: ' + JSON.stringify(deletedReceipt));
+    res.json({ _id: receiptId });
   } catch (err) {
     console.log(err);
   } finally {
@@ -111,7 +111,8 @@ app.put('/receipt', async (req, res) => {
     };
 
     // updates one document in the receipts collection that matches the query
-    const insertedReceipt = await receipts.updateOne(query, updateReceipt);
+    const response = await receipts.updateOne(query, updateReceipt);
+    res.json({ _id: receiptId, price, name, location, timestamp });
   } catch (err) {
     console.log(err);
   } finally {

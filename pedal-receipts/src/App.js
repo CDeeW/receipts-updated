@@ -29,30 +29,8 @@ const App = () => {
   // Creates a post request to the backend to add a new receipt to the database
 
   // Creates a delete request to the backend to delete an existing receipt in the database
-  const deleteReceipt = async (receiptId) => {
-    try {
-      const response = await axios.delete('http://localhost:8000/receipt', {
-        params: { receiptId },
-      });
-
-      getReceipts();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // Creates a put request to the backend to edit an existing receipt in the database
-  const editReceipt = async (receipt) => {
-    try {
-      const response = await axios.put(
-        'http://localhost:8000/receipt',
-        receipt
-      );
-      getReceipts();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // Sets the state of editModal to false and addModal to true so App rerenders and opens the AddReceiptModal
   const createAddModal = async () => {
@@ -84,7 +62,8 @@ const App = () => {
           <EditReceiptModal
             setEditModal={setEditModal}
             selectedReceipt={selectedReceipt}
-            editReceipt={editReceipt}
+            receiptsArray={receiptsArray}
+            setReceiptsArray={setReceiptsArray}
           />
         )}
 
@@ -102,10 +81,11 @@ const App = () => {
           {/* maps every receipt object in the receiptsArray to a TableRow component and passes in the receipt to each one as a prop */}
           {receiptsArray.map((receipt, _index) => (
             <TableRow
-              key={_index}
+              _index={_index}
               receipt={receipt}
-              deleteReceipt={deleteReceipt}
               createEditModal={createEditModal}
+              receiptsArray={receiptsArray}
+              setReceiptsArray={setReceiptsArray}
             />
           ))}
         </table>

@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const EditReceiptModal = ({ setEditModal, selectedReceipt, editReceipt }) => {
+const EditReceiptModal = ({
+  setEditModal,
+  selectedReceipt,
+  receiptsArray,
+  setReceiptsArray,
+}) => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -11,6 +16,34 @@ const EditReceiptModal = ({ setEditModal, selectedReceipt, editReceipt }) => {
     setName(selectedReceipt.name);
     setLocation(selectedReceipt.location);
   }, []);
+
+  const editReceipt = async (receipt) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/receipt',
+        receipt
+      );
+
+      const updatedReceipt = response.data;
+      console.log(JSON.stringify(receiptsArray));
+
+      const receiptIndex = receiptsArray.findIndex(
+        (receipt) => receipt._id == updatedReceipt._id
+      );
+
+      const newReceiptsArray = receiptsArray.map((receipt, index) => {
+        if (index == receiptIndex) {
+          return updatedReceipt;
+        }
+
+        return receipt;
+      });
+
+      setReceiptsArray(newReceiptsArray);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // When the EditReceiptModal is submitted it creates a receipt object from the values of
   // state: price, name and location and the property values _id and timestamp from the original
